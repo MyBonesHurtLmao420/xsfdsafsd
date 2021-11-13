@@ -1,7 +1,7 @@
-FROM node:14
-WORKDIR /usr/src/app
-COPY src/package*.json ./
-RUN npm install
-COPY /src .
+FROM openresty/openresty:1.11.2.5-alpine
+
 EXPOSE 8080
-CMD ["node", "server.js"]
+ADD nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+
+RUN chgrp -R 0 /usr/local/openresty/nginx/ && \
+    chmod -R g=u /usr/local/openresty/nginx/
